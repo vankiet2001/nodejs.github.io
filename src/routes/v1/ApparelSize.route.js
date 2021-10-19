@@ -1,36 +1,36 @@
 const express = require('express');
-const userValidation = require('../../validations/user.validation');
-const userController = require('../../controllers/user.controller');
+const apparelSizeController = require('../../controllers/apparelSize.controller');
 
 const router = express.Router();
 
 router
   .route('/')
-  .post(userController.createUser)
-  .get(userController.getUsers);
+
+  .post(apparelSizeController.createApparelSize)
+  .get(apparelSizeController.getApparelSizes);
 
 router
-  .route('/:userId')
-  .get(userController.getUser)
-  .patch(userController.updateUser)
-  .delete(userController.deleteUser);
+  .route('/:apparelSizeId')
+  .get(apparelSizeController.getApparelSize)
+  .patch(apparelSizeController.updateApparelSize)
+  .delete(apparelSizeController.deleteApparelSize);
 
 module.exports = router;
 
 /**
  * @swagger
  * tags:
- *   name: Users
- *   description: User management and retrieval
+ *   name: ApparelSizes
+ *   description: ApparelSize management and retrieval
  */
 
 /**
  * @swagger
- * /users:
+ * /apparelSizes:
  *   post:
- *     summary: Create a user
- *     description: Only admins can create other users.
- *     tags: [Users]
+ *     summary: Create a apparelSize
+ *     description: Only admins can create other apparelSizes.
+ *     tags: [ApparelSizes]
  *     security:
  *       - bearerAuth: []
  *     requestBody:
@@ -58,19 +58,19 @@ module.exports = router;
  *                 description: At least one number and one letter
  *               role:
  *                  type: string
- *                  enum: [user, admin]
+ *                  enum: [apparelSize, admin]
  *             example:
  *               name: fake name
  *               email: fake@example.com
  *               password: password1
- *               role: user
+ *               role: apparelSize
  *     responses:
  *       "201":
  *         description: Created
  *         content:
  *           application/json:
  *             schema:
- *                $ref: '#/components/schemas/User'
+ *                $ref: '#/components/schemas/ApparelSize'
  *       "400":
  *         $ref: '#/components/responses/DuplicateEmail'
  *       "401":
@@ -79,9 +79,9 @@ module.exports = router;
  *         $ref: '#/components/responses/Forbidden'
  *
  *   get:
- *     summary: Get all users
- *     description: Only admins can retrieve all users.
- *     tags: [Users]
+ *     summary: Get all apparelSizes
+ *     description: Only admins can retrieve all apparelSizes.
+ *     tags: [ApparelSizes]
  *     security:
  *       - bearerAuth: []
  *     parameters:
@@ -89,12 +89,12 @@ module.exports = router;
  *         name: name
  *         schema:
  *           type: string
- *         description: User name
+ *         description: ApparelSize name
  *       - in: query
  *         name: role
  *         schema:
  *           type: string
- *         description: User role
+ *         description: ApparelSize role
  *       - in: query
  *         name: sortBy
  *         schema:
@@ -106,7 +106,7 @@ module.exports = router;
  *           type: integer
  *           minimum: 1
  *         default: 10
- *         description: Maximum number of users
+ *         description: Maximum number of apparelSizes
  *       - in: query
  *         name: page
  *         schema:
@@ -125,7 +125,7 @@ module.exports = router;
  *                 results:
  *                   type: array
  *                   items:
- *                     $ref: '#/components/schemas/User'
+ *                     $ref: '#/components/schemas/ApparelSize'
  *                 page:
  *                   type: integer
  *                   example: 1
@@ -146,11 +146,11 @@ module.exports = router;
 
 /**
  * @swagger
- * /users/{id}:
+ * /apparelSizes/{id}:
  *   get:
- *     summary: Get a user
- *     description: Logged in users can fetch only their own user information. Only admins can fetch other users.
- *     tags: [Users]
+ *     summary: Get a apparelSize
+ *     description: Logged in apparelSizes can fetch only their own apparelSize information. Only admins can fetch other apparelSizes.
+ *     tags: [ApparelSizes]
  *     security:
  *       - bearerAuth: []
  *     parameters:
@@ -159,14 +159,14 @@ module.exports = router;
  *         required: true
  *         schema:
  *           type: string
- *         description: User id
+ *         description: ApparelSize id
  *     responses:
  *       "200":
  *         description: OK
  *         content:
  *           application/json:
  *             schema:
- *                $ref: '#/components/schemas/User'
+ *                $ref: '#/components/schemas/ApparelSize'
  *       "401":
  *         $ref: '#/components/responses/Unauthorized'
  *       "403":
@@ -175,9 +175,9 @@ module.exports = router;
  *         $ref: '#/components/responses/NotFound'
  *
  *   patch:
- *     summary: Update a user
- *     description: Logged in users can only update their own information. Only admins can update other users.
- *     tags: [Users]
+ *     summary: Update a apparelSize
+ *     description: Logged in apparelSizes can only update their own information. Only admins can update other apparelSizes.
+ *     tags: [ApparelSizes]
  *     security:
  *       - bearerAuth: []
  *     parameters:
@@ -186,7 +186,7 @@ module.exports = router;
  *         required: true
  *         schema:
  *           type: string
- *         description: User id
+ *         description: ApparelSize id
  *     requestBody:
  *       required: true
  *       content:
@@ -215,7 +215,7 @@ module.exports = router;
  *         content:
  *           application/json:
  *             schema:
- *                $ref: '#/components/schemas/User'
+ *                $ref: '#/components/schemas/ApparelSize'
  *       "400":
  *         $ref: '#/components/responses/DuplicateEmail'
  *       "401":
@@ -226,9 +226,9 @@ module.exports = router;
  *         $ref: '#/components/responses/NotFound'
  *
  *   delete:
- *     summary: Delete a user
- *     description: Logged in users can delete only themselves. Only admins can delete other users.
- *     tags: [Users]
+ *     summary: Delete a apparelSize
+ *     description: Logged in apparelSizes can delete only themselves. Only admins can delete other apparelSizes.
+ *     tags: [ApparelSizes]
  *     security:
  *       - bearerAuth: []
  *     parameters:
@@ -237,7 +237,7 @@ module.exports = router;
  *         required: true
  *         schema:
  *           type: string
- *         description: User id
+ *         description: ApparelSize id
  *     responses:
  *       "200":
  *         description: No content

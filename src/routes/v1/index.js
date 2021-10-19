@@ -1,6 +1,9 @@
 const express = require('express');
 const authRoute = require('./auth.route');
+const kietRoute = require('./kiet.route');
 const userRoute = require('./user.route');
+const apparelSizeRoute = require('./ApparelSize.route');
+const productRoute = require('./Product.route');
 const docsRoute = require('./docs.route');
 const config = require('../../config/config');
 
@@ -10,6 +13,18 @@ const defaultRoutes = [
   {
     path: '/auth',
     route: authRoute,
+  },
+  {
+    path: '/product',
+    route: productRoute,
+  },
+  {
+    path: '/apparelSize',
+    route: apparelSizeRoute,
+  },
+  {
+    path: '/kiet',
+    route: kietRoute,
   },
   {
     path: '/users',
